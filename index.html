@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>EDUSTREAMIX | B.Com Semester 4</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- Splash -->
+<div id="splash">
+<h1>🎓 EDUSTREAMIX</h1>
+</div>
+
+<div class="app-container">
+
+<header class="header">
+<h2>🎓 EDUSTREAMIX</h2>
+<p>B.Com Semester 4 Learning Portal</p>
+</header>
+
+<div class="controls">
+<button onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+<button onclick="goHome()"><i class="fas fa-home"></i> Home</button>
+</div>
+
+<div id="groups" class="screen active"></div>
+<div id="subjects" class="screen"></div>
+<div id="channels" class="screen"></div>
+<div id="links" class="screen"></div>
+
+</div>
+
+<script src="data.js"></script>
+
+<script>
+
+const groupsDiv = document.getElementById("groups");
+const subjectsDiv = document.getElementById("subjects");
+const channelsDiv = document.getElementById("channels");
+const linksDiv = document.getElementById("links");
+
+let currentSubject = null;
+
+/* Screen Switch */
+function showScreen(screen){
+document.querySelectorAll(".screen")
+.forEach(s => s.classList.remove("active"));
+screen.classList.add("active");
+}
+
+/* Card Creator */
+function createCard(text, icon, clickFn){
+let div = document.createElement("div");
+div.className = "card";
+div.innerHTML = `<i class="${icon}"></i> ${text}`;
+div.onclick = clickFn;
+return div;
+}
+
+/* Show Subjects */
+function showSubjects(group){
+subjectsDiv.innerHTML = "<h3>Select Subject</h3>";
+
+data[group].forEach(subject=>{
+subjectsDiv.appendChild(
+createCard(subject.name, subject.icon, ()=>showChannels(subject))
+);
+});
+
+showScreen(subjectsDiv);
+}
+
+/* Show Channels */
+function showChannels(subject){
+currentSubject = subject;
+
+channelsDiv.innerHTML = `<h3>${subject.name}</h3>`;
+
+subject.channels.forEach(channel=>{
+channelsDiv.appendChild(
+createCard(channel.name, "fas fa-p
